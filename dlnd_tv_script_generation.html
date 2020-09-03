@@ -13512,7 +13512,7 @@ sequence_length = 4</code></pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="k">import</span> <span class="n">TensorDataset</span><span class="p">,</span> <span class="n">DataLoader</span>
@@ -13529,18 +13529,16 @@ sequence_length = 4</code></pre>
     <span class="n">feature</span><span class="o">=</span><span class="p">[]</span>
     <span class="n">target</span><span class="o">=</span><span class="p">[]</span>
     <span class="n">l_target</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)</span> <span class="o">-</span> <span class="n">sequence_length</span>
+    
     <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l_target</span><span class="p">):</span>
-        
-        <span class="n">feature_array</span><span class="o">=</span><span class="n">words</span><span class="p">[</span><span class="n">index</span><span class="p">:</span><span class="n">index</span><span class="o">+</span><span class="n">sequence_length</span><span class="p">]</span>
+        <span class="n">last_index</span><span class="o">=</span><span class="n">index</span><span class="o">+</span><span class="n">sequence_length</span>
+        <span class="n">feature_array</span><span class="o">=</span><span class="n">words</span><span class="p">[</span><span class="n">index</span><span class="p">:</span><span class="n">last_index</span><span class="p">]</span>
         <span class="n">feature</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feature_array</span><span class="p">)</span>
        
-        <span class="n">target_array</span><span class="o">=</span><span class="n">words</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="n">sequence_length</span><span class="p">]</span>
+        <span class="n">target_array</span><span class="o">=</span><span class="n">words</span><span class="p">[</span><span class="n">last_index</span><span class="p">]</span>
         <span class="n">target</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">target_array</span><span class="p">)</span>
-
-    <span class="n">feature_tensor</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">feature</span><span class="p">))</span>
-    <span class="n">target_tensor</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">target</span><span class="p">))</span>
     
-    <span class="n">data</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">feature_tensor</span><span class="p">,</span> <span class="n">target_tensor</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">feature</span><span class="p">)),</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">target</span><span class="p">)))</span>
     <span class="n">data_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
     <span class="c1"># return a dataloader</span>
     <span class="k">return</span> <span class="n">data_loader</span>
@@ -13582,7 +13580,7 @@ tensor([ 33,  26,  22,  39,  16,  28,  11,  43,  30,  12])</code></pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># test dataloader</span>
